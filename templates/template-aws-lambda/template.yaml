@@ -1,0 +1,183 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: aws-lambda-template
+  title: AWS Lambda Python Template
+  description: Scaffolder template for a python AWS Lambda
+spec:
+  owner: user:guest
+  type: service
+
+  # These parameters are used to generate the input form in the frontend, and are
+  # used to gather input data for the execution of the template.
+  parameters:
+    - title: Choose Application Details
+      required:
+        - applicationName
+      properties:
+        applicationName:
+          title: Application Name
+          type: string
+          description: Enter the name of your application
+
+        host:
+          title: Host
+          type: string
+          enum:
+            - bitbucket.org
+          default: bitbucket.org
+          description: Select the host for your repository
+
+        workspace:
+          title: Workspace
+          type: string
+          enum:
+            - Syntonize
+          default: syntonize-data
+          description: Select the organization for your repository
+
+        project:
+          title: Project
+          type: string
+          enum:
+            - bandits-idp
+          default: bandits-idp
+          description: Select the project for your repository
+
+    - title: Choose Pipeline Parameters
+      required:
+        - folder
+        - project
+      properties:
+        folder:
+          title: Azure Pipelines folder name
+          type: string
+          description: Name of folder in azure pipelines
+          enum:
+            - syntonize-data
+          default: syntonize-data
+        project:
+          title: Project Name
+          type: string
+          description: Name of azure project
+          enum:
+            - bandits-idp
+          default: bandits-idp
+
+  steps:
+    #####################
+    #        CODE       #
+    #####################
+    # Each step executes an action, in this case one templates files into the working directory.
+    - id: fetch-app
+      name: Fetch App
+      action: fetch:template
+      input:
+        url: ./app
+        targetPath: ./app
+        values:
+          name: ${{ parameters.applicationName }}
+          project: ${{ parameters.project }}
+          organization: ${{ parameters.org }}
+          parameterName: '{{ parameters.app_name }}'
+          parameterVersion: '{{ parameters.app_version }}'
+
+    # This step publishes the contents of the working directory to Azure Devops.
+    - id: publish-code
+      name: Publish App
+      action: publish:azure
+      input:
+        sourcePath: ./app
+        defaultBranch: main
+        allowedHosts: ['bitbucket.org']
+        description: Publish ${{ parameters.applicationName }} repository
+        repoUrl: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}
+
+    # This step publishes the pipeline in Azure Pipelines.
+    - id: create-code-pipeline
+      name: Create App Pipeline
+      action: azure:pipeline:create
+      input:
+        organization:  ${{ parameters.org }}
+        project: ${{ parameters.project }}
+        folder:  ${{ parameters.folder }}
+        name: ${{ parameters.applicationName }}
+        repositoryId: ${{ steps['publish-code'].output.repositoryId }}
+        repositoryName: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}
+        yamlPath: ./azure-pipelines.yaml
+
+    # Register our new component in the catalog.
+    - id: register-app
+      name: Register App
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-code'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+    #####################
+    #       INFRA       #
+    #####################
+
+    - id: fetch-infra
+      name: Fetch Infra
+      action: fetch:template
+      input:
+        url: ./infra
+        targetPath: ./infra
+        values:
+          name: ${{ parameters.applicationName }}
+          project: ${{ parameters.project }}
+          parameterName: '{{ parameters.app_name }}'
+          parameterVersion: '{{ parameters.app_version }}'
+
+    # This step publishes the contents of the working directory to Azure Devops.
+    - id: publish-infra
+      name: Publish Infra
+      action: publish:azure
+      input:
+        sourcePath: ./infra
+        defaultBranch: main
+        allowedHosts: ['dev.azure.com']
+        description: Publish ${{ parameters.applicationName }}-infra repository
+        repoUrl: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}-infra
+
+    # This step publishes the pipeline in Azure Pipelines.
+    - id: create-infra-pipeline
+      name: Create Infra Pipeline
+      action: azure:pipeline:create
+      input:
+        organization:  ${{ parameters.org }}
+        project: ${{ parameters.project }}
+        folder:  ${{ parameters.folder }}
+        name: ${{ parameters.applicationName }}-infra
+        repositoryId: ${{ steps['publish-infra'].output.repositoryId }}
+        repositoryName: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}-infra
+        yamlPath: ./azure-pipelines.yaml
+
+    #  Register our new component in the catalog.
+    - id: register-infra
+      name: Register Infra
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-infra'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+    # Final step is running our application pipeline.
+    - id: run-app-pipeline
+      name: Run App Pipeline
+      action: azure:pipeline:run
+      input:
+        organization:  ${{ parameters.org }}
+        project: ${{ parameters.project }}
+        pipelineId: ${{ steps['create-code-pipeline'].output.pipelineId }}
+        
+
+  # # Outputs are displayed to the user after a successful execution of the template.
+  # output:
+  #   links:
+  #     - title: Repository
+  #       url: ${{ steps['publish'].output.remoteUrl }}
+  #     - title: Open in catalog
+  #       icon: catalog
+  #       entityRef: ${{ steps['register'].output.entityRef }}

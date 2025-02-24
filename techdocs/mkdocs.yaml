@@ -1,0 +1,9 @@
+site_name: Syntonize Docs
+site_description: Our own hub of knowledge
+plugins:
+  - techdocs-core
+nav:
+  - Home: index.md
+  - Tech Fellowship & Disciplines:
+    - Overview: fellowships/overview.md
+    - GenAI Fellowship: fellowships/genai/index.md

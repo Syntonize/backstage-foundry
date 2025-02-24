@@ -1,0 +1,86 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "app"
+version = "0.0.1"
+authors = ["Syntonize"]
+description = "Python applications template"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+ruff = "^0.8.0"
+mypy = "^1.13.0"
+coverage = "^7.5.4"
+python-dotenv = "^1.0.1"
+pre-commit = "^3.7.1"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = false
+disallow_untyped_decorators = false
+disallow_subclassing_any = false
+strict = true
+exclude = ['^setup\.py$', "venv"]
+
+[[tool.mypy.overrides]]
+module = []
+
+[tool.ruff]
+lint.select = [
+    "E",   # pycodestyle
+    "W",   # pycodestyle
+    "F",   # pyflake
+    "I",   # isort
+    "S",   # flake8-bandit
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "D",   # pydocstyle
+    "RUF", # Ruff specific rules
+]
+
+exclude = [
+    ".git",
+    ".idea",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "venv",
+    "build",
+    "assets/*/*",
+    "docs/",
+]
+
+lint.ignore = [
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D106", # Missing docstring in public nested class
+    "D105", # Missing docstring in magic method
+    "D107", # Missing docstring in __init__
+    "D203", # no-blank-line-before-class (conflict with D211)
+    "D213", # multi-line-summary-second-line (conflict with D212)
+    "S314", # use defusedxml instead of xml
+    "S608", # SQL Injection - Should be enabled at some point?
+    "S320", # XML Parsing
+]
+
+line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["D104"]
+"tests/*" = ["S", "D"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true

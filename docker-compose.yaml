@@ -1,0 +1,34 @@
+services:
+
+  backstage:
+    image: backstage
+    build:
+      context: .
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN}
+      APP_PORT: ${APP_PORT}
+      BACKEND_PORT: ${BACKEND_PORT}
+      # POSTGRES_HOST: ${POSTGRES_HOST}
+      # POSTGRES_PORT: ${POSTGRES_PORT}
+      # POSTGRES_USER: ${POSTGRES_USER}
+      # POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # POSTGRES_DB: ${POSTGRES_DB}
+      AZ_DEVOPS_HOST: ${AZ_DEVOPS_HOST}
+      AZ_DEVOPS_ACCESS_TOKEN: ${AZ_DEVOPS_ACCESS_TOKEN}
+      AZ_DEVOPS_ORG: ${AZ_DEVOPS_ORG}
+      AZ_DEVOPS_IDP_PROJECT: ${AZ_DEVOPS_IDP_PROJECT}
+      GITHUB_OAUTH_ID: ${GITHUB_OAUTH_ID}
+      GITHUB_OAUTH_SECRET: ${GITHUB_OAUTH_SECRET}
+  #   depends_on:
+  #     - postgres
+  #
+  # postgres:
+  #   image: postgres:17.2-bookworm
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #   ports:
+  #     - ${POSTGRES_PORT}:${POSTGRES_PORT}

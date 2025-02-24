@@ -1,0 +1,20 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: ${{ values.name }}
+spec:
+  owner: group:Developers
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}-app
+  annotations:
+    dev.azure.com/project-repo: ${{ values.project }}/${{ values.name }}
+    dev.azure.com/readme-path: README.md
+spec:
+  type: service
+  owner: group:Developers
+  lifecycle: experimental
+  system: ${{ values.name }}

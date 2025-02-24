@@ -1,0 +1,43 @@
+parameters:
+- name: app_name
+  default: ${{ values.name }}
+- name: app_version
+  default: 0.0.1
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+    tags: $${{ values.parameterName }}:$${{ values.parameterVersion }}
+- script: 'docker build -t $${{ values.parameterName }}:$${{ values.parameterVersion }} .'
+  displayName: 'Build docker image'
+
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'aws-practica'
+    regionName: 'eu-west-1'
+    imageSource: 'imagename'
+    sourceImageName: $${{ values.parameterName }}
+    sourceImageTag: $${{ values.parameterVersion }}
+    repositoryName: $${{ values.parameterName }}
+    pushTag: $${{ values.parameterVersion }}
+    autoCreateRepository: true
+
+- task: AzureCLI@2
+  displayName: 'Trigger another pipeline with app_name variable'
+  inputs:
+    azureSubscription: azure-contributor-connection
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az pipelines run --name  $${{ values.parameterName }}-infra \
+        --org https://dev.azure.com/${{ values.organization }} \
+        --project ${{ values.project }} \
+        --parameters app_name=$${{ values.parameterName }} app_version=$${{ values.parameterVersion }}
