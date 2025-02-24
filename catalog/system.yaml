@@ -1,0 +1,179 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: CRM
+  description: Manages customer relationships and sales pipelines.
+spec:
+  owner: Sales-Team
+  domain: Sales
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Lead-Tracking
+  description: Tracks potential customers and automates follow-ups.
+spec:
+  owner: Sales-Team
+  domain: Sales
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Budget-Management
+  description: Handles financial planning and budget allocation.
+spec:
+  owner: Finance-Core
+  domain: Finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Payroll-System
+  description: Automates employee salary calculations and tax deductions.
+spec:
+  owner: Finance-Core
+  domain: Finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Recruitment-Portal
+  description: Manages job applications and hiring workflows.
+spec:
+  owner: HR-Management
+  domain: Human-Resources
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Employee-Records
+  description: Stores and manages employee information and performance reviews.
+spec:
+  owner: HR-Management
+  domain: Human-Resources
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Inventory-Management
+  description: Tracks stock levels and optimizes supply chain processes.
+spec:
+  owner: Logistics-Hub
+  domain: Supply-Chain-Logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Shipping-Tracker
+  description: Monitors shipments and delivery schedules in real time.
+spec:
+  owner: Logistics-Hub
+  domain: Supply-Chain-Logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Cybersecurity-Monitor
+  description: Detects and prevents security threats within IT infrastructure.
+spec:
+  owner: IT-Security
+  domain: IT
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: IT-Support-Helpdesk
+  description: Provides technical support and manages IT service tickets.
+spec:
+  owner: IT-Security
+  domain: IT
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Customer-Support-Chatbot
+  description: AI-powered chatbot for handling customer inquiries.
+spec:
+  owner: Customer-Relations
+  domain: Customer-Service
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Feedback-Management
+  description: Collects and analyzes customer feedback for service improvements.
+spec:
+  owner: Customer-Relations
+  domain: Customer-Service
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Legal-Compliance-Tracker
+  description: Ensures company policies align with legal regulations.
+spec:
+  owner: Legal-Compliance
+  domain: Legal
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Contract-Management
+  description: Stores, tracks, and automates contract approvals.
+spec:
+  owner: Legal-Compliance
+  domain: Legal
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Product-Development-Tracker
+  description: Manages R&D projects and tracks product lifecycle stages.
+spec:
+  owner: RnD-Lab
+  domain: Research-Development
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Innovation-Lab
+  description: A platform for testing and prototyping new ideas.
+spec:
+  owner: RnD-Lab
+  domain: Research-Development
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Marketing-Automation
+  description: Automates email campaigns, social media, and analytics.
+spec:
+  owner: Marketing-Squad
+  domain: Marketing
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Ad-Performance-Tracker
+  description: Tracks and optimizes digital ad campaigns.
+spec:
+  owner: Marketing-Squad
+  domain: Marketing
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Production-Workflow
+  description: Coordinates manufacturing and production schedules.
+spec:
+  owner: Ops-Engineering
+  domain: Operations
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: Quality-Control
+  description: Ensures product quality and compliance with standards.
+spec:
+  owner: Ops-Engineering
+  domain: Operations

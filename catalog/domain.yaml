@@ -1,0 +1,79 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Marketing
+  description: Handles branding, advertising, and promotional strategies.
+spec:
+  owner: Marketing
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Sales
+  description: Focuses on generating revenue by selling products or services.
+spec:
+  owner: Sales
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Human-Resources
+  description: Manages hiring, employee relations, and benefits.
+spec:
+  owner: Human Resources
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Finance
+  description: Oversees budgeting, accounting, and financial planning.
+spec:
+  owner: Finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Operations
+  description: Ensures smooth production and business processes.
+spec:
+  owner: Operations
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: IT
+  description: Manages technical infrastructure and cybersecurity.
+spec:
+  owner: IT
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Customer-Service
+  description: Assists customers and handles inquiries or complaints.
+spec:
+  owner: Customer Service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Research-Development
+  description: Innovates and improves products or services.
+spec:
+  owner: Research & Development
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Legal
+  description: Ensures compliance with laws and manages contracts or disputes.
+spec:
+  owner: Legal
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: Supply-Chain-Logistics
+  description: Oversees inventory, distribution, and procurement.
+spec:
+  owner: Supply Chain & Logistics

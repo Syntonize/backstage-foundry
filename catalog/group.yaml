@@ -1,0 +1,119 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Sales-Team
+  description: The Sales division responsible for revenue generation.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Sales Department
+  children: [CRM, Lead-Tracking]
+  members: [lucasberlang, adrijh]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Finance-Core
+  description: Handles financial planning and accounting.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Finance Division
+  children: [Budget-Management, Payroll-System]
+  members: [dimc26, adrijh]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: HR-Management
+  description: Human Resources team managing recruitment and employees.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Human Resources
+  children: [Recruitment-Portal, Employee-Records]
+  members: [lucasberlang, dimc26]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Logistics-Hub
+  description: Oversees inventory and distribution management.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Supply Chain & Logistics
+  children: [Inventory-Management, Shipping-Tracker]
+  members: [adrijh, dimc26]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: IT-Security
+  description: Manages cybersecurity and IT infrastructure.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: IT Security Team
+  children: [Cybersecurity-Monitor, IT-Support-Helpdesk]
+  members: [lucasberlang, adrijh]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Customer-Relations
+  description: Ensures customer satisfaction and support.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Customer Service Team
+  children: [Customer-Support-Chatbot, Feedback-Management]
+  members: [dimc26, adrijh]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Legal-Compliance
+  description: Manages legal matters and corporate compliance.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Legal & Compliance
+  children: [Legal-Compliance-Tracker, Contract-Management]
+  members: [lucasberlang, dimc26]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: RnD-Lab
+  description: Focused on research and new product development.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Research & Development
+  children: [Product-Development-Tracker, Innovation-Lab]
+  members: [adrijh, lucasberlang]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Marketing-Squad
+  description: Drives advertising and brand awareness.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Marketing Division
+  children: [Marketing-Automation, Ad-Performance-Tracker]
+  members: [dimc26, lucasberlang]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: Ops-Engineering
+  description: Responsible for operations and quality control.
+spec:
+  type: Tech-Unit
+  profile:
+    displayName: Operations Team
+  children: [Production-Workflow, Quality-Control]
+  members: [adrijh, dimc26]
