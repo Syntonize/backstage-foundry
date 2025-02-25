@@ -1,7 +1,7 @@
 FROM node:20-bookworm-slim AS packages
 
 # Define the app directory as a build-time argument
-ARG APP_DIR=app
+ARG APP_DIR=backstage
 WORKDIR /app
 
 # Use the APP_DIR variable in COPY commands
@@ -18,8 +18,7 @@ RUN find packages \! -name "package.json" -mindepth 2 -maxdepth 2 -exec rm -rf {
 # Stage 2 - Install dependencies and build packages
 FROM node:20-bookworm-slim AS build
 
-# Define the app directory as a build-time argument
-ARG APP_DIR=app
+ARG APP_DIR=backstage
 
 # Set Python interpreter for `node-gyp` to use
 ENV PYTHON=/usr/bin/python3
@@ -43,9 +42,8 @@ RUN --mount=type=cache,target=/home/node/.cache/yarn,sharing=locked,uid=1000,gid
     yarn install --immutable
 
 COPY --chown=node:node ${APP_DIR}/. .
-RUN yarn --cwd packages/backend add @parfuemerie-douglas/scaffolder-backend-module-azure-pipelines && \
-    yarn --cwd packages/app add @backstage-community/plugin-azure-devops && \
-    yarn --cwd packages/backend add @backstage-community/plugin-azure-devops-backend
+RUN yarn --cwd packages/backend add @backstage/plugin-catalog-backend-module-github && \
+    yarn --cwd packages/backend add @backstage/plugin-auth-backend-module-github-provider
 
 RUN yarn tsc
 RUN yarn --cwd packages/backend build
@@ -57,8 +55,7 @@ RUN mkdir packages/backend/dist/skeleton packages/backend/dist/bundle \
 # Stage 3 - Build the actual backend image and install production dependencies
 FROM node:20-bookworm-slim
 
-# Define the app directory as a build-time argument
-ARG APP_DIR=app
+ARG APP_DIR=backstage
 
 # Set Python interpreter for `node-gyp` to use
 ENV PYTHON=/usr/bin/python3
@@ -97,7 +94,7 @@ COPY --from=build --chown=node:node /app/packages/backend/dist/bundle/ ./
 COPY --chown=node:node ${APP_DIR}/app-config*.yaml ./
 
 # This will include the organization data from the root directory
-COPY --chown=node:node /org ./org
+COPY --chown=node:node /catalog ./catalog
 
 # This switches many Node.js dependencies to production mode.
 ENV NODE_ENV=production
