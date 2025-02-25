@@ -1,0 +1,26 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: adrijh
+spec:
+  memberOf: []
+  profile:
+    displayName: adrijh
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: lucasberlang
+spec:
+  memberOf: []
+  profile:
+    displayName: lucasberlang
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: dimc26 
+spec:
+  memberOf: []
+  profile:
+    displayName: dimc26

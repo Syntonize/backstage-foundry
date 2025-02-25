@@ -5,6 +5,7 @@ metadata:
   description: The Sales division responsible for revenue generation.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Sales Department
   members: [lucasberlang, adrijh]
@@ -16,6 +17,7 @@ metadata:
   description: Handles financial planning and accounting.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Finance Division
   members: [dimc26, adrijh]
@@ -27,6 +29,7 @@ metadata:
   description: Human Resources team managing recruitment and employees.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Human Resources
   members: [lucasberlang, dimc26]
@@ -38,6 +41,7 @@ metadata:
   description: Oversees inventory and distribution management.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Supply Chain & Logistics
   members: [adrijh, dimc26]
@@ -49,6 +53,7 @@ metadata:
   description: Manages cybersecurity and IT infrastructure.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: IT Security Team
   members: [lucasberlang, adrijh]
@@ -60,6 +65,7 @@ metadata:
   description: Ensures customer satisfaction and support.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Customer Service Team
   members: [dimc26, adrijh]
@@ -71,6 +77,7 @@ metadata:
   description: Manages legal matters and corporate compliance.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Legal & Compliance
   members: [lucasberlang, dimc26]
@@ -82,6 +89,7 @@ metadata:
   description: Focused on research and new product development.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Research & Development
   members: [adrijh, lucasberlang]
@@ -93,6 +101,7 @@ metadata:
   description: Drives advertising and brand awareness.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Marketing Division
   members: [dimc26, lucasberlang]
@@ -104,6 +113,7 @@ metadata:
   description: Responsible for operations and quality control.
 spec:
   type: Tech-Unit
+  children: []
   profile:
     displayName: Operations Team
   members: [adrijh, dimc26]
