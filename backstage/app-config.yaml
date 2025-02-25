@@ -116,6 +116,15 @@ catalog:
         schedule:
           frequency: { minutes: 5 }
           timeout: { minutes: 3 }
+      docs:
+        organization: 'Syntonize'
+        catalogPath: 'techdocs/catalog-info.yaml'
+        filters:
+          branch: 'main'
+          repository: '^backstage-foundry'
+        schedule:
+          frequency: { minutes: 5 }
+          timeout: { minutes: 3 }
 
   locations:
   #   - type: file

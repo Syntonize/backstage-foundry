@@ -1,9 +1,9 @@
-site_name: Syntonize Docs
-site_description: Our own hub of knowledge
+site_name: Example Techdocs
+site_description: Our example docs
 plugins:
   - techdocs-core
 nav:
   - Home: index.md
-  - Tech Fellowship & Disciplines:
-    - Overview: fellowships/overview.md
-    - GenAI Fellowship: fellowships/genai/index.md
+  - A Section:
+    - Subsection I: subsection_1.md
+    - Subsection II: subsection_2.md

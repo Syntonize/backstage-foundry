@@ -43,7 +43,9 @@ RUN --mount=type=cache,target=/home/node/.cache/yarn,sharing=locked,uid=1000,gid
 
 COPY --chown=node:node ${APP_DIR}/. .
 RUN yarn --cwd packages/backend add @backstage/plugin-catalog-backend-module-github && \
-    yarn --cwd packages/backend add @backstage/plugin-auth-backend-module-github-provider
+    yarn --cwd packages/backend add @backstage/plugin-auth-backend-module-github-provider && \
+    yarn --cwd packages/app add @backstage/plugin-techdocs && \
+    yarn --cwd packages/backend add @backstage/plugin-techdocs-backend
 
 RUN yarn tsc
 RUN yarn --cwd packages/backend build
