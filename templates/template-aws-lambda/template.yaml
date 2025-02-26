@@ -25,45 +25,17 @@ spec:
           title: Host
           type: string
           enum:
-            - bitbucket.org
-          default: bitbucket.org
+            - github.com
+          default: github.com
           description: Select the host for your repository
 
-        workspace:
-          title: Workspace
+        owner:
+          title: Owner
           type: string
           enum:
             - Syntonize
-          default: syntonize-data
+          default: Syntonize
           description: Select the organization for your repository
-
-        project:
-          title: Project
-          type: string
-          enum:
-            - bandits-idp
-          default: bandits-idp
-          description: Select the project for your repository
-
-    - title: Choose Pipeline Parameters
-      required:
-        - folder
-        - project
-      properties:
-        folder:
-          title: Azure Pipelines folder name
-          type: string
-          description: Name of folder in azure pipelines
-          enum:
-            - syntonize-data
-          default: syntonize-data
-        project:
-          title: Project Name
-          type: string
-          description: Name of azure project
-          enum:
-            - bandits-idp
-          default: bandits-idp
 
   steps:
     #####################
@@ -78,34 +50,25 @@ spec:
         targetPath: ./app
         values:
           name: ${{ parameters.applicationName }}
-          project: ${{ parameters.project }}
-          organization: ${{ parameters.org }}
-          parameterName: '{{ parameters.app_name }}'
-          parameterVersion: '{{ parameters.app_version }}'
+          owner: ${{ parameters.owner }}
 
-    # This step publishes the contents of the working directory to Azure Devops.
+    # This step creates the repository.
+    - id: create-repo
+      name: Create Repository
+      action: github:repo:create
+      input:
+        description: Publish ${{ parameters.applicationName }} repository
+        repoUrl: ${{ parameters.host}}?repo=${{ parameters.applicationName }}&owner=${{ parameters.owner }}
+
+    # This step publishes the contents of the working directory to Github.
     - id: publish-code
       name: Publish App
-      action: publish:azure
+      action: github:repo:push
       input:
         sourcePath: ./app
-        defaultBranch: main
-        allowedHosts: ['bitbucket.org']
+        defaultBranch: dev
         description: Publish ${{ parameters.applicationName }} repository
-        repoUrl: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}
-
-    # This step publishes the pipeline in Azure Pipelines.
-    - id: create-code-pipeline
-      name: Create App Pipeline
-      action: azure:pipeline:create
-      input:
-        organization:  ${{ parameters.org }}
-        project: ${{ parameters.project }}
-        folder:  ${{ parameters.folder }}
-        name: ${{ parameters.applicationName }}
-        repositoryId: ${{ steps['publish-code'].output.repositoryId }}
-        repositoryName: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}
-        yamlPath: ./azure-pipelines.yaml
+        repoUrl: ${{ parameters.host}}?repo=${{ parameters.applicationName }}&owner=${{ parameters.owner }}
 
     # Register our new component in the catalog.
     - id: register-app
@@ -127,33 +90,25 @@ spec:
         targetPath: ./infra
         values:
           name: ${{ parameters.applicationName }}
-          project: ${{ parameters.project }}
-          parameterName: '{{ parameters.app_name }}'
-          parameterVersion: '{{ parameters.app_version }}'
+          owner: ${{ parameters.owner }}
+
+    # This step creates the repository.
+    - id: create-repo
+      name: Create Repository
+      action: github:repo:create
+      input:
+        description: Publish ${{ parameters.applicationName }} repository
+        repoUrl: ${{ parameters.host}}?repo=${{ parameters.applicationName }}-infra&owner=${{ parameters.owner }}
 
     # This step publishes the contents of the working directory to Azure Devops.
     - id: publish-infra
       name: Publish Infra
-      action: publish:azure
+      action: github:repo:push
       input:
         sourcePath: ./infra
-        defaultBranch: main
-        allowedHosts: ['dev.azure.com']
+        defaultBranch: dev
         description: Publish ${{ parameters.applicationName }}-infra repository
-        repoUrl: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}-infra
-
-    # This step publishes the pipeline in Azure Pipelines.
-    - id: create-infra-pipeline
-      name: Create Infra Pipeline
-      action: azure:pipeline:create
-      input:
-        organization:  ${{ parameters.org }}
-        project: ${{ parameters.project }}
-        folder:  ${{ parameters.folder }}
-        name: ${{ parameters.applicationName }}-infra
-        repositoryId: ${{ steps['publish-infra'].output.repositoryId }}
-        repositoryName: ${{ parameters.host}}?organization=${{ parameters.org }}&project=${{ parameters.project }}&repo=${{ parameters.applicationName }}-infra
-        yamlPath: ./azure-pipelines.yaml
+        repoUrl: ${{ parameters.host}}?repo=${{ parameters.applicationName }}-infra&owner=${{ parameters.owner }}
 
     #  Register our new component in the catalog.
     - id: register-infra
@@ -162,22 +117,3 @@ spec:
       input:
         repoContentsUrl: ${{ steps['publish-infra'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
-
-    # Final step is running our application pipeline.
-    - id: run-app-pipeline
-      name: Run App Pipeline
-      action: azure:pipeline:run
-      input:
-        organization:  ${{ parameters.org }}
-        project: ${{ parameters.project }}
-        pipelineId: ${{ steps['create-code-pipeline'].output.pipelineId }}
-        
-
-  # # Outputs are displayed to the user after a successful execution of the template.
-  # output:
-  #   links:
-  #     - title: Repository
-  #       url: ${{ steps['publish'].output.remoteUrl }}
-  #     - title: Open in catalog
-  #       icon: catalog
-  #       entityRef: ${{ steps['register'].output.entityRef }}

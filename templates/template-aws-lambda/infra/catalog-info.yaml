@@ -2,12 +2,9 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{ values.name }}-infra
-  annotations:
-    dev.azure.com/project-repo: ${{ values.project }}/${{ values.name }}-infra
-    dev.azure.com/readme-path: README.md
 spec:
   type: service
-  owner: group:Infrastructure
+  owner: group:IT-Security
   lifecycle: experimental
   system: ${{ values.name }}
 ---
@@ -18,7 +15,7 @@ metadata:
   description: AWS Lambda to run application
 spec:
   type: lambda
-  owner: group:Infrastructure
+  owner: group:IT-Security
   system: ${{ values.name }}
   dependsOn:
     - component:${{ values.name }}-infra
